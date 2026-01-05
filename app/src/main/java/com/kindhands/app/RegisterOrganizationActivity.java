@@ -21,6 +21,8 @@ import com.kindhands.app.model.Organization;
 import com.kindhands.app.network.ApiService;
 import com.kindhands.app.network.RetrofitClient;
 
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -68,8 +70,6 @@ public class RegisterOrganizationActivity extends AppCompatActivity {
                             String fileName = path != null ? path.substring(path.lastIndexOf("/") + 1) : "Unknown File";
                             
                             tvSelectedFileName.setText(fileName);
-                            // Populate the document field with the file name/uri
-                            // Note: This only sends the name/URI string to backend, not the file itself
                             etDocument.setText(uri.toString());
                         }
                     }
@@ -78,7 +78,7 @@ public class RegisterOrganizationActivity extends AppCompatActivity {
 
         btnUploadDocument.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("*/*"); // Allow all file types (PDF, Image, etc.)
+            intent.setType("*/*"); // Allow all file types
             intent.addCategory(Intent.CATEGORY_OPENABLE);
             filePickerLauncher.launch(Intent.createChooser(intent, "Select Certificate"));
         });
@@ -92,7 +92,7 @@ public class RegisterOrganizationActivity extends AppCompatActivity {
         String contact = etContact.getText().toString().trim();
         String address = etAddress.getText().toString().trim();
         String pincode = etPincode.getText().toString().trim();
-        String document = etDocument.getText().toString().trim(); // This will contain file name/link
+        String document = etDocument.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
         
         String rawType = spinnerOrgType.getSelectedItem().toString();
@@ -103,10 +103,8 @@ public class RegisterOrganizationActivity extends AppCompatActivity {
             return;
         }
 
-        // Create Organization Object
         Organization org = new Organization(name, email, password, contact, type, address, pincode, document);
 
-        // Call API
         ApiService apiService = RetrofitClient.getClient().create(ApiService.class);
         Call<Organization> call = apiService.registerOrganization(org);
 
@@ -115,16 +113,27 @@ public class RegisterOrganizationActivity extends AppCompatActivity {
             public void onResponse(Call<Organization> call, Response<Organization> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(RegisterOrganizationActivity.this, "Organization Registered! Status: PENDING", Toast.LENGTH_LONG).show();
-                    finish(); // Close screen
+                    finish();
                 } else {
-                    Toast.makeText(RegisterOrganizationActivity.this, "Registration Failed: " + response.message(), Toast.LENGTH_SHORT).show();
+                    // SHOW DETAILED ERROR FROM BACKEND
+                    String errorBody = "Unknown error";
+                    try {
+                        if (response.errorBody() != null) {
+                            errorBody = response.errorBody().string();
+                        }
+                    } catch (IOException e) {
+                        Log.e("API_ERROR", "Error parsing error body", e);
+                    }
+                    Toast.makeText(RegisterOrganizationActivity.this, "Registration Failed: " + response.code() + " - " + errorBody, Toast.LENGTH_LONG).show();
+                    Log.e("API_ERROR", "Response Code: " + response.code() + " Body: " + errorBody);
                 }
             }
 
             @Override
             public void onFailure(Call<Organization> call, Throwable t) {
-                Toast.makeText(RegisterOrganizationActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("ORG_REGISTER", t.getMessage());
+                // SHOW NETWORK FAILURE
+                Toast.makeText(RegisterOrganizationActivity.this, "Network Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Log.e("API_FAILURE", t.getMessage(), t);
             }
         });
     }
