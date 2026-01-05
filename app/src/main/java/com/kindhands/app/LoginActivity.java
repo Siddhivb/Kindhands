@@ -67,8 +67,8 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
 
-            // CHECK FOR ADMIN LOGIN FIRST
-            if ("admin@kindhands.com".equals(email) && "admin123".equals(password)) {
+            // CHECK FOR ADMIN LOGIN FIRST (Case Insensitive Email)
+            if ("admin@kindhands.com".equalsIgnoreCase(email) && "admin123".equals(password)) {
                 Toast.makeText(LoginActivity.this, "Welcome Admin!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(LoginActivity.this, AdminDashboardActivity.class);
                 startActivity(intent);

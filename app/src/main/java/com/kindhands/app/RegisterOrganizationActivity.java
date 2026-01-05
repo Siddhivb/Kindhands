@@ -104,6 +104,7 @@ public class RegisterOrganizationActivity extends AppCompatActivity {
         }
 
         Organization org = new Organization(name, email, password, contact, type, address, pincode, document);
+        org.setStatus("PENDING");
 
         ApiService apiService = RetrofitClient.getClient().create(ApiService.class);
         Call<Organization> call = apiService.registerOrganization(org);
