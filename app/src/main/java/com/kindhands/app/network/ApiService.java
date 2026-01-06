@@ -6,6 +6,7 @@ import com.kindhands.app.model.OrganizationLoginRequest;
 import com.kindhands.app.model.User;
 
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -21,7 +22,66 @@ import retrofit2.http.Query;
 
 public interface ApiService {
 
-    // --- REQUEST CONTROLLER ---
+    // =================================================================
+    // CORRECTED: All endpoints are now prefixed with "api/"
+    // to match your backend @RequestMapping annotations.
+    // =================================================================
+
+
+    // --- AUTH CONTROLLER --- (/api/auth)
+    @POST("api/auth/register")
+    Call<Object> registerUser(@Body User user);
+
+    @POST("api/auth/login")
+    Call<User> loginUser(@Body User user);
+
+    @POST("api/auth/forgot-password")
+    Call<String> forgotPassword(@Body Map<String, String> mobile);
+
+    @POST("api/auth/verify-otp")
+    Call<String> verifyOtp(@Body Map<String, String> otpData);
+
+    @POST("api/auth/reset-password")
+    Call<String> resetPassword(@Body Map<String, String> passwordData);
+
+
+    // --- DONOR CONTROLLER --- (/api/donors)
+    @POST("api/donors/register")
+    Call<User> registerDonor(@Body User user);
+
+    @POST("api/donors/login")
+    Call<User> loginDonor(@Body User user);
+
+
+    // --- ORGANIZATION CONTROLLER --- (/api/organizations)
+    @Multipart
+    @POST("api/organizations/register")
+    Call<String> registerOrganization(
+            @Part("name") RequestBody name,
+            @Part("email") RequestBody email,
+            @Part("password") RequestBody password,
+            @Part("contact") RequestBody contact,
+            @Part("type") RequestBody type,
+            @Part("address") RequestBody address,
+            @Part("pincode") RequestBody pincode,
+            @Part MultipartBody.Part document
+    );
+
+    @POST("api/organizations/login")
+    Call<Organization> loginOrganization(@Body OrganizationLoginRequest loginRequest);
+
+
+    // --- ADMIN PANEL (from OrganizationController) ---
+    @GET("api/organizations/pending")
+    Call<List<Organization>> getPendingOrganizations();
+
+    @PUT("api/organizations/{id}/status")
+    Call<Organization> updateOrgStatus(@Path("id") Long id, @Query("status") String status);
+
+
+    // --- REQUEST CONTROLLER (This seems to be missing /api prefix in your backend) ---
+    // Assuming your RequestController is NOT under /api based on previous files.
+    // If it IS under /api, add "api/" to the start of these paths as well.
     @POST("requests/create")
     Call<DonationRequest> createRequest(@Body DonationRequest requestBody);
 
@@ -42,52 +102,4 @@ public interface ApiService {
 
     @PUT("requests/{id}/complete")
     Call<DonationRequest> completeRequest(@Path("id") Long id);
-
-
-    // --- AUTH CONTROLLER ---
-    @POST("auth/register")
-    Call<Object> registerUser(@Body User user);
-
-    @POST("auth/login")
-    Call<User> loginUser(@Body User user);
-
-
-    // --- DONOR CONTROLLER ---
-    @POST("donors/register")
-    Call<User> registerDonor(@Body User user);
-
-    @POST("donors/login")
-    Call<User> loginDonor(@Body User user);
-
-
-    // --- ORGANIZATION CONTROLLER ---
-    
-    // OLD JSON METHOD (Commented out to avoid conflict)
-    // @POST("organizations/register")
-    // Call<Organization> registerOrganization(@Body Organization org);
-
-    // NEW MULTIPART METHOD
-    @Multipart
-    @POST("organizations/register")
-    Call<String> registerOrganization(
-            @Part("name") RequestBody name,
-            @Part("email") RequestBody email,
-            @Part("password") RequestBody password,
-            @Part("contact") RequestBody contact,
-            @Part("type") RequestBody type,
-            @Part("address") RequestBody address,
-            @Part("pincode") RequestBody pincode,
-            @Part MultipartBody.Part document
-    );
-
-    @POST("organizations/login")
-    Call<Organization> loginOrganization(@Body OrganizationLoginRequest loginRequest);
-
-
-    // --- ADMIN PANEL ---
-    @GET("organizations/pending") 
-    Call<List<Organization>> getPendingOrganizations(); 
-
-    @PUT("organizations/{id}/status")
-    Call<Organization> updateOrgStatus(@Path("id") Long id, @Query("status") String status);
 }
