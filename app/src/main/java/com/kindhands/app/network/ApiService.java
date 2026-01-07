@@ -105,4 +105,9 @@ public interface ApiService {
 
     @GET("api/organizations/admin/document-url/{id}")
     Call<String> getDocumentUrl(@Path("id") Long id);
+    @PUT("api/organizations/admin/{id}/approve")
+    Call<Void> approveOrg(@Path("id") Long id);
+
+    @PUT("api/organizations/admin/{id}/reject")
+    Call<Void> rejectOrg(@Path("id") Long id);
 }
