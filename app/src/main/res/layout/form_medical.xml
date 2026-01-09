@@ -1,36 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-    Layout for the medical donation form.
-    This layout contains fields for entering details about medical donations,
-    including medicine name, expiry date, and quantity.
--->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Field for entering the name of the medicine -->
     <EditText
-        android:hint="@string/medicine_name_hint"
+        android:id="@+id/etKitType"
+        android:hint="Type of Kit (e.g., First Aid, Hygiene)"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autofillHints="name"
+        android:minHeight="48dp"
         android:inputType="text"/>
 
-    <!-- Field for entering the expiry date of the medicine -->
     <EditText
-        android:hint="@string/medicine_expiry_hint"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:autofillHints="date"
-        android:inputType="date"/>
-
-    <!-- Field for entering the quantity of the medicine -->
-    <EditText
+        android:id="@+id/etQuantity"
         android:hint="@string/quantity_hint"
         android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minHeight="48dp"
         android:autofillHints="none"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Deliver To (Optional):"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@color/primary_text"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Organization Type"
+        android:layout_marginBottom="4dp"/>
+
+    <Spinner
+        android:id="@+id/spinnerOrgType"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="12dp"
+        android:background="@android:drawable/btn_dropdown"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Organization Name"
+        android:layout_marginBottom="4dp"/>
+
+    <EditText
+        android:id="@+id/etOrgName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Organization Name"
+        android:inputType="text"
+        android:minHeight="48dp" />
+
+    <Button
+        android:id="@+id/btnSubmitDonation"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="@string/submit_button"
+        android:backgroundTint="@color/donate_green"
+        android:layout_marginTop="24dp"/>
+
 </LinearLayout>

@@ -6,23 +6,75 @@
     android:padding="16dp">
 
     <EditText
+        android:id="@+id/etFoodType"
         android:hint="Food Type (e.g., Rice, Canned Goods)"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autofillHints="name"
+        android:minHeight="48dp"
         android:inputType="text"/>
 
     <EditText
-        android:hint="Expiry Date"
+        android:id="@+id/etExpiryDate"
+        android:hint="Expiry Date (YYYY-MM-DD)"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autofillHints="date"
+        android:minHeight="48dp"
         android:inputType="date"/>
 
     <EditText
+        android:id="@+id/etQuantity"
         android:hint="@string/quantity_hint"
         android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minHeight="48dp"
         android:autofillHints="none"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Deliver To (Optional):"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@color/primary_text"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Organization Type"
+        android:layout_marginBottom="4dp"/>
+        
+    <Spinner
+        android:id="@+id/spinnerOrgType"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="12dp"
+        android:background="@android:drawable/btn_dropdown"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Organization Name"
+        android:layout_marginBottom="4dp"/>
+
+    <EditText
+        android:id="@+id/etOrgName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Organization Name"
+        android:inputType="text"
+        android:minHeight="48dp" />
+
+    <Button
+        android:id="@+id/btnSubmitDonation"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="@string/submit_button"
+        android:backgroundTint="@color/donate_green"
+        android:layout_marginTop="24dp"/>
+
 </LinearLayout>

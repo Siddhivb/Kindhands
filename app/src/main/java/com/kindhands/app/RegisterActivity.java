@@ -22,7 +22,7 @@ import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText etName, etEmail, etPhone, etAddress, etPincode, etPassword, etConfirmPassword;
+    private EditText etName, etEmail, etPhone, etAddress, etPincode, etPassword;
     private Spinner spinnerGender;
     private Button btnRegister;
     private TextView tvGoToLogin, tvGoToOrgRegister;
@@ -39,7 +39,6 @@ public class RegisterActivity extends AppCompatActivity {
         etAddress = findViewById(R.id.etRegisterAddress);
         etPincode = findViewById(R.id.etRegisterPincode);
         etPassword = findViewById(R.id.etRegisterPassword);
-        etConfirmPassword = findViewById(R.id.etRegisterConfirmPassword);
         spinnerGender = findViewById(R.id.spinnerGender);
         btnRegister = findViewById(R.id.btnRegister);
         tvGoToOrgRegister = findViewById(R.id.tvGoToOrgRegister);
@@ -69,25 +68,17 @@ public class RegisterActivity extends AppCompatActivity {
                 String password = etPassword.getText().toString().trim();
                 String gender = spinnerGender.getSelectedItem().toString();
 
-                // Create the User object to send to the backend.
-                // The role will be set to "DONOR" by the AuthController on the backend.
-                // We now pass "DONOR" as the 8th argument to match the constructor in User.java
                 User newUser = new User(name, email, password, mobile, address, pincode, gender, "DONOR");
 
                 // ================== API CALL ==================
-                // Get the ApiService instance from RetrofitClient
                 ApiService apiService = RetrofitClient.getClient().create(ApiService.class);
-
-                // Use the correct `registerUser` method which points to "/api/auth/register"
                 Call<Object> call = apiService.registerUser(newUser);
 
-                // Execute the network call asynchronously
                 call.enqueue(new Callback<Object>() {
                     @Override
                     public void onResponse(Call<Object> call, Response<Object> response) {
-                        // Check if the HTTP response is successful (e.g., 200 OK)
                         if (response.isSuccessful()) {
-                            Toast.makeText(RegisterActivity.this, "Registration Successful!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "Registration Successful! Please Login.", Toast.LENGTH_LONG).show();
 
                             // Navigate to the Login screen, clearing the back stack
                             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
@@ -95,11 +86,9 @@ public class RegisterActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish(); // Finish this activity
                         } else {
-                            // Handle errors from the backend (e.g., 400 Bad Request if email exists)
                             String errorMessage = "Registration Failed";
                             try {
                                 if (response.errorBody() != null) {
-                                    // Read the error message string from the response
                                     errorMessage = response.errorBody().string();
                                 }
                             } catch (Exception e) {
@@ -111,7 +100,6 @@ public class RegisterActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<Object> call, Throwable t) {
-                        // This block handles network failures (e.g., no internet, wrong server IP)
                         Toast.makeText(RegisterActivity.this, "Network Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
                         Log.e("REGISTER_ERROR", "Network request failed", t);
                     }
@@ -123,16 +111,11 @@ public class RegisterActivity extends AppCompatActivity {
         tvGoToLogin.setOnClickListener(v -> finish());
     }
 
-    /**
-     * Validates all the input fields on the registration form.
-     * @return true if all inputs are valid, false otherwise.
-     */
     private boolean validateInputs() {
         String name = etName.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
         String phone = etPhone.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
-        String confirmPassword = etConfirmPassword.getText().toString().trim();
 
         if (name.isEmpty()) {
             etName.setError("Name is required");
@@ -170,13 +153,6 @@ public class RegisterActivity extends AppCompatActivity {
             return false;
         }
 
-        if (!password.equals(confirmPassword)) {
-            etConfirmPassword.setError("Passwords do not match");
-            etConfirmPassword.requestFocus();
-            return false;
-        }
-
-        // All validations passed
         return true;
     }
 }

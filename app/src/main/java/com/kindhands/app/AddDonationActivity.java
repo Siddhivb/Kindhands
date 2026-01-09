@@ -64,10 +64,6 @@ public class AddDonationActivity extends AppCompatActivity {
     }
 
     private void fetchRequirements() {
-        // Fetch "REQUIREMENT" category requests from backend
-        // Since getOpenRequests returns all, we filter on client side or need backend filter.
-        // For now, fetching all open requests and filtering.
-        
         ApiService apiService = RetrofitClient.getClient().create(ApiService.class);
         Call<List<DonationRequest>> call = apiService.getOpenRequests();
         
@@ -81,24 +77,25 @@ public class AddDonationActivity extends AppCompatActivity {
                     for (DonationRequest req : response.body()) {
                         if ("REQUIREMENT".equalsIgnoreCase(req.getCategory())) {
                             found = true;
-                            // Display: "Org Name: Description"
-                            // Assuming otherDetails holds Org Name as set in OrganizationDashboardActivity
                             String orgName = req.getOtherDetails() != null ? req.getOtherDetails() : "Organization";
-                            reqText.append("• ").append(orgName).append(": ").append(req.getDetails()).append("\n");
+                            reqText.append("• ").append(orgName).append(": ").append(req.getDetails()).append("\n
+");
                         }
                     }
                     
                     if (found && tvRequirements != null) {
                         tvRequirements.setText(reqText.toString());
-                        tvRequirements.setVisibility(View.VISIBLE);
-                        findViewById(R.id.lblRequirements).setVisibility(View.VISIBLE);
+                    } else if (tvRequirements != null) {
+                        tvRequirements.setText("No current needs from organizations.");
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<List<DonationRequest>> call, Throwable t) {
-                // Fail silently for requirements
+                 if (tvRequirements != null) {
+                        tvRequirements.setText("Could not load organization needs.");
+                 }
             }
         });
     }
