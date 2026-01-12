@@ -45,6 +45,7 @@ public interface ApiService {
             @Part MultipartBody.Part document
     );
 
+
     @POST("api/organizations/login")
     Call<Organization> loginOrganization(@Body OrganizationLoginRequest loginRequest);
 

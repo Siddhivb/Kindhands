@@ -50,5 +50,10 @@
     <string name="medicine_expiry_hint">Expiry Date</string>
     <string name="toy_type_label">Toy Type</string>
 
+    <string-array name="org_types">
+        <item>Orphanage</item>
+        <item>Old Age Home</item>
+    </string-array>
+
         <!-- <string name="app_name">Kindhands</string> -->
 </resources>

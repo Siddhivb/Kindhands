@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.*;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,8 +45,10 @@ public class RegisterOrganizationActivity extends AppCompatActivity {
         etContact = findViewById(R.id.etOrgContact);
         etAddress = findViewById(R.id.etOrgAddress);
         etPincode = findViewById(R.id.etOrgPincode);
+
         spinnerType = findViewById(R.id.spinnerOrgType);
         tvFile = findViewById(R.id.tvSelectedFileName);
+
         btnUpload = findViewById(R.id.btnUploadDocument);
         btnRegister = findViewById(R.id.btnOrgRegister);
 
@@ -96,15 +99,14 @@ public class RegisterOrganizationActivity extends AppCompatActivity {
     }
 
     private void register() {
+        String name = etName.getText().toString().trim();
+        String email = etEmail.getText().toString().trim();
+        String password = etPassword.getText().toString().trim();
+        String contact = etContact.getText().toString().trim();
+        String address = etAddress.getText().toString().trim();
+        String pincode = etPincode.getText().toString().trim();
 
-        // ✅ VALIDATION (MOST IMPORTANT)
-        if (etName.getText().toString().trim().isEmpty()
-                || etEmail.getText().toString().trim().isEmpty()
-                || etPassword.getText().toString().trim().isEmpty()
-                || etContact.getText().toString().trim().isEmpty()
-                || etAddress.getText().toString().trim().isEmpty()
-                || etPincode.getText().toString().trim().isEmpty()) {
-
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty() || contact.isEmpty() || address.isEmpty() || pincode.isEmpty()) {
             Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -117,21 +119,22 @@ public class RegisterOrganizationActivity extends AppCompatActivity {
         File file = new File(selectedFilePath);
 
         String rawType = spinnerType.getSelectedItem().toString();
-        String type = rawType.equalsIgnoreCase("Orphanage")
-                ? "ORPHANAGE"
-                : "OLD_AGE_HOME";
+        String type = rawType.equalsIgnoreCase("Orphanage") ? "ORPHANAGE" : "OLD_AGE_HOME";
+
+        // Generate a pseudo-unique ID for userId to avoid 'already exists' error on userId field
+        String tempUserId = String.valueOf(System.currentTimeMillis() % 100000);
 
         ApiService api = RetrofitClient.getClient().create(ApiService.class);
 
         Call<String> call = api.registerOrganization(
-                rb(etName.getText().toString().trim()),
-                rb(etEmail.getText().toString().trim()),
-                rb(etPassword.getText().toString().trim()),
-                rb(etContact.getText().toString().trim()),
+                rb(name),
+                rb(email),
+                rb(password),
+                rb(contact),
                 rb(type),
-                rb(etAddress.getText().toString().trim()),
-                rb(etPincode.getText().toString().trim()),
-                rb("1"), // TEMP userId
+                rb(address),
+                rb(pincode),
+                rb(tempUserId), 
                 MultipartBody.Part.createFormData(
                         "document",
                         file.getName(),
@@ -143,23 +146,28 @@ public class RegisterOrganizationActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(RegisterOrganizationActivity.this,
-                            "Registered – wait for admin approval",
-                            Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterOrganizationActivity.this, "Registered successfully!", Toast.LENGTH_LONG).show();
                     finish();
                 } else {
-                    Toast.makeText(RegisterOrganizationActivity.this,
-                            "Failed : " + response.code(),
-                            Toast.LENGTH_LONG).show();
+                    try {
+                        String errorMsg = response.errorBody() != null ? response.errorBody().string() : "Unknown error";
+                        Log.e("ORG_REGISTER_ERROR", "Error: " + errorMsg);
+                        
+                        if (errorMsg.contains("already exists")) {
+                            Toast.makeText(RegisterOrganizationActivity.this, "Error: This Email or Organization is already registered.", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(RegisterOrganizationActivity.this, "Server Error: " + errorMsg, Toast.LENGTH_LONG).show();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Log.e("ORG_REGISTER_ERROR", t.getMessage());
-                Toast.makeText(RegisterOrganizationActivity.this,
-                        "Error : " + t.getMessage(),
-                        Toast.LENGTH_LONG).show();
+                Log.e("ORG_REGISTER_FAIL", t.getMessage(), t);
+                Toast.makeText(RegisterOrganizationActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

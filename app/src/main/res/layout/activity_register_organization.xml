@@ -55,6 +55,22 @@
             android:minHeight="48dp"
             android:layout_marginBottom="12dp"/>
 
+        <!-- Type Selection (Added) -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Organization Type"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <Spinner
+            android:id="@+id/spinnerOrgType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:entries="@array/org_types"
+            android:layout_marginBottom="12dp"/>
+
         <!-- Address -->
         <EditText
             android:id="@+id/etOrgAddress"
