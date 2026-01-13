@@ -23,6 +23,7 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static final String TAG = "LOGIN_DEBUG";
     private EditText etEmail;
     private EditText etPassword;
     private Button btnLogin;
@@ -33,7 +34,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // CHECK IF ALREADY LOGGED IN
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             navigateToDashboard();
             return;
@@ -41,44 +41,29 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.login);
 
-        // Initialize views
         etEmail = findViewById(R.id.etLoginEmail);
         etPassword = findViewById(R.id.etLoginPassword);
         btnLogin = findViewById(R.id.btnLogin);
         tvForgotPassword = findViewById(R.id.tvForgotPassword);
         tvRegister = findViewById(R.id.tvGoToRegister);
 
-        // Forgot Password Click Listener
         tvForgotPassword.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, ForgotPasswordPhoneActivity.class);
             startActivity(intent);
         });
 
-        // Login Button Click
         btnLogin.setOnClickListener(v -> {
-
             String email = etEmail.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
 
-            // Validation
-            if (email.isEmpty()) {
-                etEmail.setError("Email is required");
-                etEmail.requestFocus();
+            if (email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Please enter credentials", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            if (password.isEmpty()) {
-                etPassword.setError("Password is required");
-                etPassword.requestFocus();
-                return;
-            }
-
-            // CHECK FOR ADMIN LOGIN FIRST
             if ("admin@kindhands.com".equalsIgnoreCase(email) && "admin123".equals(password)) {
-                Toast.makeText(LoginActivity.this, "Welcome Admin!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(LoginActivity.this, AdminDashboardActivity.class);
-                startActivity(intent);
-                finish();
+                SharedPrefManager.getInstance(this).saveUser("Admin", email, "ADMIN");
+                navigateToDashboard();
                 return;
             }
 
@@ -92,8 +77,6 @@ public class LoginActivity extends AppCompatActivity {
                 public void onResponse(Call<User> call, Response<User> response) {
                     if (response.isSuccessful() && response.body() != null) {
                         User user = response.body();
-                        Toast.makeText(LoginActivity.this, "Welcome Donor " + user.getName(), Toast.LENGTH_SHORT).show();
-
                         SharedPrefManager.getInstance(LoginActivity.this).saveUser(user.getName(), user.getEmail(), "DONOR");
                         navigateToDashboard();
                     } else {
@@ -104,12 +87,12 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
+                    Log.e(TAG, "Donor Login Network Failure: " + t.getMessage());
                     tryOrganizationLogin(email, password);
                 }
             });
         });
 
-        // Register Click
         tvRegister.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, RoleSelectionActivity.class);
             startActivity(intent);
@@ -126,8 +109,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<Organization> call, Response<Organization> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Organization org = response.body();
-                    Toast.makeText(LoginActivity.this, "Welcome " + org.getName(), Toast.LENGTH_SHORT).show();
-
                     SharedPrefManager.getInstance(LoginActivity.this).saveUser(org.getName(), org.getEmail(), "ORGANIZATION");
                     navigateToDashboard();
                 } else {
@@ -137,7 +118,8 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Organization> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "Org Login Network Failure: " + t.getMessage());
+                Toast.makeText(LoginActivity.this, "Network Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -145,16 +127,13 @@ public class LoginActivity extends AppCompatActivity {
     private void navigateToDashboard() {
         String type = SharedPrefManager.getInstance(this).getUserType();
         Intent intent;
-
         if ("ORGANIZATION".equals(type)) {
-            intent = new Intent(LoginActivity.this, OrganizationDashboardActivity.class);
+            intent = new Intent(this, OrganizationDashboardActivity.class);
         } else if ("ADMIN".equals(type)) {
-            intent = new Intent(LoginActivity.this, AdminDashboardActivity.class);
+            intent = new Intent(this, AdminDashboardActivity.class);
         } else {
-            // Default to Donor Dashboard
-            intent = new Intent(LoginActivity.this, AddDonationActivity.class);
+            intent = new Intent(this, AddDonationActivity.class);
         }
-
         startActivity(intent);
         finish();
     }
