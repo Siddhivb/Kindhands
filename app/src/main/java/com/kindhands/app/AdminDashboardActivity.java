@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.kindhands.app.model.Organization;
 import com.kindhands.app.network.ApiService;
 import com.kindhands.app.network.RetrofitClient;
+import com.kindhands.app.utils.SharedPrefManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
     PendingOrgsAdapter adapter;
     List<Organization> list = new ArrayList<>();
     ApiService apiService;
+    Button btnLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,15 @@ public class AdminDashboardActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.rvPendingOrgs);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        btnLogout = findViewById(R.id.btnAdminLogout);
+        btnLogout.setOnClickListener(v -> {
+            SharedPrefManager.getInstance(this).logout();
+            Intent intent = new Intent(AdminDashboardActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+        });
 
         apiService = RetrofitClient.getClient().create(ApiService.class);
 
@@ -94,10 +105,8 @@ public class AdminDashboardActivity extends AppCompatActivity {
             h.tvName.setText(o.getName());
             h.tvDetails.setText(o.getEmail() + " | " + o.getContact());
 
-            // 🔥 VIEW DOCUMENT (Dynamically get base URL from RetrofitClient)
             h.btnView.setOnClickListener(v -> {
                 String baseUrl = RetrofitClient.getClient().baseUrl().toString();
-                // Ensure there's no double slash if baseUrl already ends with one
                 if (baseUrl.endsWith("/")) {
                     baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
                 }
