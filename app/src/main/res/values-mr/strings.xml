@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Kind Hands </string>
+    <string name="app_name">Kind Hands</string>
     <string name="app_logo_desc">Kind Hands लोगो</string>
     <string name="tagline">गरजू हृदयांना जोडणारे</string>
     <string name="donate_items">वस्तू दान करा</string>
@@ -50,4 +49,76 @@
     <string name="medicine_name_hint">औषधाचे नाव</string>
     <string name="medicine_expiry_hint">समाप्तीची तारीख</string>
     <string name="toy_type_label">खेळण्याचा प्रकार</string>
+
+    <string-array name="org_types">
+        <item>अनाथालय</item>
+        <item>वृद्धाश्रम</item>
+    </string-array>
+
+    <!-- New strings from register.xml -->
+    <string name="registration_title">नोंदणी</string>
+    <string name="address_hint">पत्ता</string>
+    <string name="pincode_hint">पिनकोड</string>
+    <string name="gender_label">लिंग</string>
+    <string name="register_button_text">नोंदणी करा</string>
+    <string name="org_register_link">तुम्ही एक संस्था आहात? येथे नोंदणी करा</string>
+
+    <!-- New strings from form_food.xml -->
+    <string name="food_type_hint">अन्नाचा प्रकार (उदा. तांदूळ, कॅन केलेला माल)</string>
+    <string name="expiry_date_hint">समाप्तीची तारीख (YYYY-MM-DD)</string>
+    <string name="deliver_to_optional_label">येथे वितरित करा (ऐच्छिक):</string>
+    <string name="organization_type_label">संस्थेचा प्रकार</string>
+    <string name="organization_name_label">संस्थेचे नाव</string>
+    <string name="enter_organization_name_hint">संस्थेचे नाव प्रविष्ट करा</string>
+
+    <!-- New strings from form_books.xml -->
+    <string name="book_category_label">श्रेणी</string>
+    <string name="educational_textbooks_checkbox">शैक्षणिक / पाठ्यपुस्तके</string>
+    <string name="fiction_story_books_checkbox">काल्पनिक / कथा पुस्तके</string>
+    <string name="religious_spiritual_checkbox">धार्मिक / आध्यात्मिक</string>
+    <string name="other_books_checkbox">इतर</string>
+    <string name="specify_other_category_hint">कृपया इतर श्रेणी निर्दिष्ट करा</string>
+
+    <!-- New strings from activity_organization_dashboard.xml -->
+    <string name="org_dashboard_title">संस्था डॅशबोर्ड</string>
+    <string name="logout_button">लॉगआउट</string>
+    <string name="post_new_requirement_label">नवीन गरज पोस्ट करा</string>
+    <string name="ngo_need_hint">तुमच्या NGO ला काय हवे आहे? (उदा. २० ब्लँकेट्स)</string>
+    <string name="submit_requirement_button">गरज सबमिट करा</string>
+    <string name="incoming_donations_label">येणार्‍या देणग्या</string>
+
+    <!-- New strings from login.xml -->
+    <string name="forgot_password_link">पासवर्ड विसरलात?</string>
+
+    <!-- New strings from form_medical.xml -->
+    <string name="kit_type_hint">किटचा प्रकार (उदा. प्रथमोपचार, स्वच्छता)</string>
+
+    <!-- New strings from form_stationery.xml -->
+    <string name="stationery_item_name_hint">वस्तूचे नाव (उदा. पेन्सिल, नोटबुक)</string>
+
+    <!-- New strings from form_toys.xml -->
+    <string name="toy_name_hint">खेळण्याचे नाव</string>
+
+    <!-- New strings from activity_language_selection.xml -->
+    <string name="choose_language_title">तुमची भाषा निवडा</string>
+    <string name="english_button">English</string>
+    <string name="marathi_button">मराठी</string>
+
+    <!-- New strings from form_clothes.xml -->
+    <string-array name="clothing_types">
+        <item>शर्ट</item>
+        <item>साडी</item>
+        <item>टी-शर्ट</item>
+        <item>जीन्स</item>
+        <item>मुलांचे कपडे</item>
+        <item>इतर</item>
+    </string-array>
+
+    <!-- New strings from item_donation_offer.xml -->
+    <string name="donation_category_placeholder">हिवाळी कपडे</string>
+    <string name="donated_by_placeholder">यांनी दान केले: लोड होत आहे...</string>
+    <string name="donation_description_placeholder">वर्णन...</string>
+    <string name="accept_button">स्वीकारा</string>
+    <string name="decline_button">नकार द्या</string>
+
 </resources>

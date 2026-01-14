@@ -19,7 +19,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Registration"
+        android:text="@string/registration_title"
         android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="@color/primary_text"
@@ -63,7 +63,7 @@
         android:id="@+id/etRegisterAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Address"
+        android:hint="@string/address_hint"
         android:inputType="textPostalAddress"
         android:minHeight="48dp"
         android:layout_marginBottom="12dp"/>
@@ -73,7 +73,7 @@
         android:id="@+id/etRegisterPincode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Pincode"
+        android:hint="@string/pincode_hint"
         android:inputType="number"
         android:maxLength="6"
         android:minHeight="48dp"
@@ -83,7 +83,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Gender"
+        android:text="@string/gender_label"
         android:layout_marginBottom="4dp"/>
 
     <Spinner
@@ -96,7 +96,7 @@
     <!-- Password -->
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android.layout_height="wrap_content"
         app:passwordToggleEnabled="true"
         app:hintEnabled="false"
         android:layout_marginBottom="24dp">
@@ -117,7 +117,7 @@
         android:id="@+id/btnRegister"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:text="Register"
+        android:text="@string/register_button_text"
         android:backgroundTint="@color/donate_green"
         android:layout_marginBottom="16dp"/>
 
@@ -126,7 +126,7 @@
         android:id="@+id/tvGoToOrgRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Are you an Organization? Register Here"
+        android:text="@string/org_register_link"
         android:textColor="@color/ngo_blue"
         android:clickable="true"
         android:focusable="true"

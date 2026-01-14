@@ -55,5 +55,71 @@
         <item>Old Age Home</item>
     </string-array>
 
+    <!-- New strings from register.xml -->
+    <string name="registration_title">Registration</string>
+    <string name="address_hint">Address</string>
+    <string name="pincode_hint">Pincode</string>
+    <string name="gender_label">Gender</string>
+    <string name="register_button_text">Register</string>
+    <string name="org_register_link">Are you an Organization? Register Here</string>
+
+    <!-- New strings from form_food.xml -->
+    <string name="food_type_hint">Food Type (e.g., Rice, Canned Goods)</string>
+    <string name="expiry_date_hint">Expiry Date (YYYY-MM-DD)</string>
+    <string name="deliver_to_optional_label">Deliver To (Optional):</string>
+    <string name="organization_type_label">Organization Type</string>
+    <string name="organization_name_label">Organization Name</string>
+    <string name="enter_organization_name_hint">Enter Organization Name</string>
+
+    <!-- New strings from form_books.xml -->
+    <string name="book_category_label">Category</string>
+    <string name="educational_textbooks_checkbox">Educational / Textbooks</string>
+    <string name="fiction_story_books_checkbox">Fiction / Story Books</string>
+    <string name="religious_spiritual_checkbox">Religious / Spiritual</string>
+    <string name="other_books_checkbox">Others</string>
+    <string name="specify_other_category_hint">Please specify other category</string>
+
+    <!-- New strings from activity_organization_dashboard.xml -->
+    <string name="org_dashboard_title">Organization Dashboard</string>
+    <string name="logout_button">Logout</string>
+    <string name="post_new_requirement_label">Post New Requirement</string>
+    <string name="ngo_need_hint">What does your NGO need? (e.g. 20 Blankets)</string>
+    <string name="submit_requirement_button">Submit Requirement</string>
+    <string name="incoming_donations_label">Incoming Donations</string>
+
+    <!-- New strings from login.xml -->
+    <string name="forgot_password_link">Forgot Password?</string>
+
+    <!-- New strings from form_medical.xml -->
+    <string name="kit_type_hint">Type of Kit (e.g., First Aid, Hygiene)</string>
+
+    <!-- New strings from form_stationery.xml -->
+    <string name="stationery_item_name_hint">Item Name (e.g., Pencils, Notebooks)</string>
+
+    <!-- New strings from form_toys.xml -->
+    <string name="toy_name_hint">Toy Name</string>
+
+    <!-- New strings from activity_language_selection.xml -->
+    <string name="choose_language_title">Choose Your Language</string>
+    <string name="english_button">English</string>
+    <string name="marathi_button">मराठी (Marathi)</string>
+
+    <!-- New strings from form_clothes.xml -->
+    <string-array name="clothing_types">
+        <item>Shirt</item>
+        <item>Saree</item>
+        <item>T-Shirt</item>
+        <item>Jeans</item>
+        <item>Kids Wear</item>
+        <item>Other</item>
+    </string-array>
+
+    <!-- New strings from item_donation_offer.xml -->
+    <string name="donation_category_placeholder">Winter Clothes</string>
+    <string name="donated_by_placeholder">Donated by: Loading...</string>
+    <string name="donation_description_placeholder">Description...</string>
+    <string name="accept_button">Accept</string>
+    <string name="decline_button">Decline</string>
+
         <!-- <string name="app_name">Kindhands</string> -->
 </resources>

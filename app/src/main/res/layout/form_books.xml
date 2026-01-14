@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Category"
+        android:text="@string/book_category_label"
         android:textStyle="bold"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"/>
@@ -27,31 +27,31 @@
         android:id="@+id/cbEducational"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Educational / Textbooks"/>
+        android:text="@string/educational_textbooks_checkbox"/>
 
     <CheckBox
         android:id="@+id/cbFiction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fiction / Story Books"/>
+        android:text="@string/fiction_story_books_checkbox"/>
 
     <CheckBox
         android:id="@+id/cbReligious"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Religious / Spiritual"/>
+        android:text="@string/religious_spiritual_checkbox"/>
 
     <CheckBox
         android:id="@+id/cbOtherBooks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Others"/>
+        android:text="@string/other_books_checkbox"/>
 
     <EditText
         android:id="@+id/etOtherBooks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Please specify other category"
+        android:hint="@string/specify_other_category_hint"
         android:visibility="gone"
         android:inputType="text"
         android:autofillHints="description"
@@ -70,7 +70,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Deliver To (Optional):"
+        android:text="@string/deliver_to_optional_label"
         android:textStyle="bold"
         android:textSize="18sp"
         android:textColor="@color/primary_text"
@@ -80,7 +80,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Organization Type"
+        android:text="@string/organization_type_label"
         android:layout_marginBottom="4dp"/>
         
     <Spinner
@@ -93,14 +93,14 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Organization Name"
+        android:text="@string/organization_name_label"
         android:layout_marginBottom="4dp"/>
 
     <EditText
         android:id="@+id/etOrgName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Organization Name"
+        android:hint="@string/enter_organization_name_hint"
         android:inputType="text"
         android:minHeight="48dp" />
 
