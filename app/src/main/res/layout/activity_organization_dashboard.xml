@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Organization Dashboard"
+            android:text="@string/org_dashboard_title"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="@color/primary_text"
@@ -27,7 +27,7 @@
             android:id="@+id/btnLogoutOrg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Logout"
+            android:text="@string/logout_button"
             android:layout_alignParentEnd="true"
             android:backgroundTint="@color/design_default_color_error"
             android:minWidth="0dp"
@@ -54,7 +54,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Post New Requirement"
+                android:text="@string/post_new_requirement_label"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp"/>
 
@@ -62,7 +62,7 @@
                 android:id="@+id/etReqDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="What does your NGO need? (e.g. 20 Blankets)"
+                android:hint="@string/ngo_need_hint"
                 android:inputType="textMultiLine"
                 android:minHeight="48dp"
                 android:background="@android:color/white"
@@ -74,7 +74,7 @@
                 android:id="@+id/btnPostReq"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Submit Requirement"
+                android:text="@string/submit_requirement_button"
                 android:background="@drawable/btncurve"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -82,7 +82,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Incoming Donations"
+        android:text="@string/incoming_donations_label"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginBottom="8dp"/>

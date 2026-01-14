@@ -8,7 +8,7 @@
 
     <EditText
         android:id="@+id/etKitType"
-        android:hint="Type of Kit (e.g., First Aid, Hygiene)"
+        android:hint="@string/kit_type_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autofillHints="name"
@@ -27,7 +27,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Deliver To (Optional):"
+        android:text="@string/deliver_to_optional_label"
         android:textStyle="bold"
         android:textSize="18sp"
         android:textColor="@color/primary_text"
@@ -37,7 +37,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Organization Type"
+        android:text="@string/organization_type_label"
         android:layout_marginBottom="4dp"/>
 
     <Spinner
@@ -50,14 +50,14 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Organization Name"
+        android:text="@string/organization_name_label"
         android:layout_marginBottom="4dp"/>
 
     <EditText
         android:id="@+id/etOrgName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Organization Name"
+        android:hint="@string/enter_organization_name_hint"
         android:inputType="text"
         android:minHeight="48dp" />
 

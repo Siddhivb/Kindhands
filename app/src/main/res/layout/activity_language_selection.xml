@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose Your Language"
+        android:text="@string/choose_language_title"
         android:textSize="24sp"
         android:layout_marginBottom="32dp"/>
 
@@ -20,14 +20,14 @@
         android:id="@+id/button_english"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="English"
+        android:text="@string/english_button"
         android:layout_marginBottom="16dp"/>
 
     <Button
         android:id="@+id/button_marathi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="मराठी (Marathi)"/>
+        android:text="@string/marathi_button"/>
 
 </LinearLayout>
     
