@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- INTERNET permission -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -13,47 +14,63 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.KindHands"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config"
+        tools:targetApi="n">
+
+        <!-- Main Activity -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
-            <!-- Removed MAIN/LAUNCHER intent filter from here -->
         </activity>
+
+        <!-- Login Activity (Launcher) -->
         <activity
             android:name=".LoginActivity"
             android:exported="true">
-            <!-- Added MAIN/LAUNCHER intent filter here -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".RoleSelectionActivity"
             android:exported="false" />
+
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
+
         <activity
             android:name=".AddDonationActivity"
             android:exported="false" />
+
         <activity
             android:name=".DonationDetailsActivity"
             android:exported="false" />
+
         <activity
             android:name=".RegisterOrganizationActivity"
             android:exported="false" />
+
         <activity
             android:name=".AdminDashboardActivity"
             android:exported="false" />
 
-        <!-- Merged Forgot Password Activities -->
+        <activity
+            android:name=".OrganizationDashboardActivity"
+            android:exported="false" />
+
+        <!-- Forgot Password Activities -->
         <activity
             android:name=".ForgotPasswordPhoneActivity"
             android:exported="false" />
+
         <activity
             android:name=".ForgotPasswordOtpActivity"
             android:exported="false" />
+
         <activity
             android:name=".ResetPasswordActivity"
             android:exported="false" />
