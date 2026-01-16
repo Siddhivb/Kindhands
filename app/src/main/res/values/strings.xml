@@ -20,7 +20,7 @@
     <string name="email_hint">Email</string>
     <string name="password_hint">Password</string>
     <string name="login_button">Login</string>
-    <string name="register_link">Don\'t have an account? Register</string>
+    <string name="register_link">Don't have an account? Register</string>
     
     <!-- Register Screen Strings -->
     <string name="register_title">Create Account</string>
@@ -120,6 +120,26 @@
     <string name="donation_description_placeholder">Description...</string>
     <string name="accept_button">Accept</string>
     <string name="decline_button">Decline</string>
+
+    <!-- New strings from activity_add_donation.xml -->
+    <string name="donate_question_title">What would you like to donate?</string>
+    <string name="card_title_clothes">Clothes</string>
+    <string name="card_title_food">Food</string>
+    <string name="card_title_books">Books</string>
+    <string name="card_title_medical_kit">Medical Kit</string>
+    <string name="card_title_toys">Toys</string>
+    <string name="card_title_stationery">Stationery</string>
+    <string name="org_needs_label">Organization Needs:</string>
+    <string name="loading_requirements_placeholder">Loading requirements...</string>
+
+    <!-- New strings from activity_reset_password.xml -->
+    <string name="reset_password_title">Reset Password</string>
+    <string name="new_password_hint">New Password</string>
+    <string name="confirm_new_password_hint">Confirm New Password</string>
+
+    <!-- New strings from activity_forgot_password_phone.xml -->
+    <string name="forgot_password_phone_hint">Enter your phone number</string>
+    <string name="send_otp_button">Send OTP</string>
 
         <!-- <string name="app_name">Kindhands</string> -->
 </resources>

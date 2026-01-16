@@ -8,10 +8,13 @@ public class RetrofitClient {
 
     private static Retrofit retrofit;
 
+    // When using `adb reverse`, localhost on the device is forwarded to the host machine.
+    private static final String BASE_URL = "http://localhost:8080/";
+
     public static Retrofit getClient() {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl("http://10.179.14.94:8080/")
+                    .baseUrl(BASE_URL)
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();

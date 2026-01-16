@@ -121,4 +121,17 @@
     <string name="accept_button">स्वीकारा</string>
     <string name="decline_button">नकार द्या</string>
 
+
+    <!-- activity_add_donation.xml  -->
+    <string name="donate_question_title">तुम्ही काय दान करू इच्छिता?</string>
+    <string name="card_title_clothes">कपडे</string>
+    <string name="card_title_food">अन्न</string>
+    <string name="card_title_books">पुस्तके</string>
+    <string name="card_title_medical_kit">वैद्यकीय किट</string>
+    <string name="card_title_toys">खेळणी</string>
+    <string name="card_title_stationery">स्टेशनरी</string>
+    <string name="org_needs_label">संस्थेच्या गरजा:</string>
+    <string name="loading_requirements_placeholder">गरजा लोड होत आहेत...</string>
+
+
 </resources>
