@@ -3,6 +3,7 @@ package com.kindhands.app;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,9 +22,13 @@ import com.kindhands.app.network.ApiService;
 import com.kindhands.app.network.RetrofitClient;
 import com.kindhands.app.utils.SharedPrefManager;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -81,6 +87,53 @@ public class AdminDashboardActivity extends AppCompatActivity {
         });
     }
 
+    private void downloadAndOpenDoc(Long id) {
+        apiService.viewDoc(id).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    try {
+                        File file = new File(getExternalFilesDir(null), "certificate_" + id + ".pdf");
+                        InputStream is = response.body().byteStream();
+                        FileOutputStream fos = new FileOutputStream(file);
+                        byte[] buffer = new byte[4096];
+                        int read;
+                        while ((read = is.read(buffer)) != -1) {
+                            fos.write(buffer, 0, read);
+                        }
+                        fos.flush();
+                        fos.close();
+                        is.close();
+
+                        openFile(file);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(AdminDashboardActivity.this, "Failed to save file", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(AdminDashboardActivity.this, "File not found on server", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(AdminDashboardActivity.this, "Download failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void openFile(File file) {
+        Uri uri = FileProvider.getUriForFile(this, getPackageName() + ".provider", file);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(uri, "application/pdf"); // Assuming it's a PDF
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        try {
+            startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(this, "No app found to open PDF", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     // ================= ADAPTER =================
     class PendingOrgsAdapter extends RecyclerView.Adapter<PendingOrgsAdapter.VH> {
 
@@ -105,18 +158,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
             h.tvName.setText(o.getName());
             h.tvDetails.setText(o.getEmail() + " | " + o.getContact());
 
-            h.btnView.setOnClickListener(v -> {
-                String baseUrl = RetrofitClient.getClient().baseUrl().toString();
-                if (baseUrl.endsWith("/")) {
-                    baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
-                }
-                String documentUrl = baseUrl + "/api/organizations/admin/document/" + o.getId();
-
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(documentUrl));
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            });
+            h.btnView.setOnClickListener(v -> downloadAndOpenDoc(o.getId()));
 
             h.btnApprove.setOnClickListener(v -> updateStatus(o.getId(), true));
             h.btnReject.setOnClickListener(v -> updateStatus(o.getId(), false));
